@@ -1,17 +1,24 @@
-// asyncJavascript.js
 
-async function writeItemsWithDelay(arr) {
-  let delay = 1000; // começa com 1 segundo
+async function writeItemsWithDelay(maxDelayMs = 10000) {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
   const output = document.getElementById("output");
 
-  for (const item of arr) {
-    await new Promise(resolve => setTimeout(resolve, delay));
-    output.textContent += `${item}\n`;
+  let delay = 1000; 
+  let elapsed = 0;  
+  let index = 0;    
 
-    // dobra o tempo, mas limita a no máximo 10 segundos
-    delay = Math.min(delay * 2, 10000);
+  while (elapsed + delay <= maxDelayMs) {
+    const thisDelay = delay;
+
+    await new Promise(resolve => setTimeout(resolve, thisDelay));
+    elapsed += thisDelay;
+
+    const letter = alphabet[index % alphabet.length];
+    output.textContent += `${letter} - ${thisDelay / 1000}s\n`;
+
+    delay *= 2;
+    index++;
   }
 }
 
-// Tornar acessível globalmente
 window.writeItemsWithDelay = writeItemsWithDelay;

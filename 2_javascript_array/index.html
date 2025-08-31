@@ -1,42 +1,57 @@
-<link rel="stylesheet" href="style.css">
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
   <meta charset="UTF-8">
   <title>Async Delay Example</title>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      max-width: 720px;
-      margin: 24px auto;
-    }
-    pre {
-      background: #f6f8fa;
-      padding: 12px;
-      border-radius: 6px;
-      min-height: 100px;
-    }
-  </style>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+
 </head>
+
 <body>
-  <h1>Exibir Itens com Atraso Progressivo</h1>
 
-  <button id="startBtn">Iniciar</button>
+<h1>Exibir Itens com Atraso Progressivo</h1>
 
-  <div class="row">
-    <b>Resultado:</b>
-    <pre id="output">—</pre>
-  </div>
+<div class="row">
+  <label for="maxDelay"><b>Atraso máximo (segundos)</b></label><br>
+  <input id="maxDelay" type="number" min="1" step="1" value="10" placeholder="ex.: 10"><br>
+  <small>O primeiro atraso é 1s e dobra a cada item (1s, 2s, 4s, …) até o valor máximo indicado.</small>
+  <br>
+</div>
+
+<div>
+  <button id="startBtn" class="btn1">Iniciar</button>
+</div>
+
+<div class="row">
+  <b>Resultado:</b>
+  <pre id="output">—</pre>
+</div>
+
+<div class="row">
+  <a href="../index.html" class="btn">Voltar para home</a>
+</div>
+
+
+
 
   <script src="asyncJavascript.js"></script>
-  <script>
-    document.getElementById("startBtn").addEventListener("click", () => {
-      document.getElementById("output").textContent = "";
-      const items = ["a", "b", "c", "d"];
-      writeItemsWithDelay(items);
-    });
-  </script>
+<script>
+  document.getElementById("startBtn").addEventListener("click", () => {
+    document.getElementById("output").textContent = "";
+
+    const maxSecs = Number(document.getElementById("maxDelay").value);
+    const maxDelayMs = Number.isFinite(maxSecs) && maxSecs > 0 ? maxSecs * 1000 : 10000;
+
+    writeItemsWithDelay(maxDelayMs);
+  });
+</script>
+
+
+
 </body>
 </html>
