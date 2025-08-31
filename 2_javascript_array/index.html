@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="style.css">
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Async Delay Example</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      max-width: 720px;
+      margin: 24px auto;
+    }
+    pre {
+      background: #f6f8fa;
+      padding: 12px;
+      border-radius: 6px;
+      min-height: 100px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Exibir Itens com Atraso Progressivo</h1>
+
+  <button id="startBtn">Iniciar</button>
+
+  <div class="row">
+    <b>Resultado:</b>
+    <pre id="output">—</pre>
+  </div>
+
+  <script src="asyncJavascript.js"></script>
+  <script>
+    document.getElementById("startBtn").addEventListener("click", () => {
+      document.getElementById("output").textContent = "";
+      const items = ["a", "b", "c", "d"];
+      writeItemsWithDelay(items);
+    });
+  </script>
+</body>
+</html>
