@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercise 5 — Two-Egg Strategy (100 Floors)</title>
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root { --purple:#592ba5; --purple-dark:#2b0469; --muted:#6b7280; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      max-width: 900px;
+      margin: 24px auto;
+      padding: 0 12px;
+      font-size: 14px;
+      color: #111827;
+    }
+    h1 { margin: 0 0 6px; font-size: 24px; }
+    p.lead { margin: 0 0 16px; color: var(--muted); }
+    .btn {
+      display: inline-block; padding: 10px 16px; border-radius: 8px;
+      background: var(--purple); color: #fff; text-decoration: none; font-weight: 600;
+    }
+    .btn:hover { background: var(--purple-dark); }
+    .row { margin: 16px 0; }
+    table {
+      width: 100%; border-collapse: collapse; background: #fff; overflow: hidden;
+      border: 1px solid #e5e7eb; border-radius: 10px;
+    }
+    thead th {
+      background: #f8fafc; color: #111827; text-align: left; font-weight: 700;
+      padding: 10px; border-bottom: 1px solid #e5e7eb;
+    }
+    tbody td {
+      padding: 10px; border-top: 1px solid #f1f5f9; vertical-align: top;
+    }
+    tbody tr:nth-child(odd) td { background: #fbfbfc; }
+    code { background: #f6f8fa; padding: 2px 6px; border-radius: 6px; }
+    .note {
+      background: #f6f8fa; border: 1px solid #e5e7eb; border-radius: 10px;
+      padding: 12px; color: #374151;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Two-Egg Strategy — Optimal Plan (100 Floors)</h1>
+  <p class="lead">
+    Goal: minimize the <b>maximum</b> number of drops in the worst case. With two eggs, the optimal plan
+    uses <b>decreasing steps</b> so total worst-case drops ≤ <b>14</b>.
+  </p>
+
+  <div class="row note">
+    <b>Why 14?</b> Choose the first-egg steps as <code>t, t−1, t−2, …, 1</code> so they cover at least 100 floors:<br>
+    <code>t(t+1)/2 ≥ 100 ⇒ t = 14</code> (since <code>14·15/2 = 105</code>).<br>
+    Drop at floors: <code>14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</code>.
+  </div>
+
+  <div class="row">
+    <table aria-label="Worst-case balanced plan for 2 eggs">
+      <thead>
+        <tr>
+          <th style="width:80px;">Drop (k)</th>
+          <th style="width:120px;">Floor (F<sub>k</sub>)</th>
+          <th>If 1st egg breaks here → linear search with 2nd egg</th>
+          <th style="width:140px;">Linear checks</th>
+          <th style="width:200px;">Worst-case total drops</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>14</td><td>Floors 1–13</td><td>13</td><td>1 + 13 = <b>14</b></td></tr>
+        <tr><td>2</td><td>27</td><td>Floors 15–26</td><td>12</td><td>2 + 12 = <b>14</b></td></tr>
+        <tr><td>3</td><td>39</td><td>Floors 28–38</td><td>11</td><td>3 + 11 = <b>14</b></td></tr>
+        <tr><td>4</td><td>50</td><td>Floors 40–49</td><td>10</td><td>4 + 10 = <b>14</b></td></tr>
+        <tr><td>5</td><td>60</td><td>Floors 51–59</td><td>9</td><td>5 + 9 = <b>14</b></td></tr>
+        <tr><td>6</td><td>69</td><td>Floors 61–68</td><td>8</td><td>6 + 8 = <b>14</b></td></tr>
+        <tr><td>7</td><td>77</td><td>Floors 70–76</td><td>7</td><td>7 + 7 = <b>14</b></td></tr>
+        <tr><td>8</td><td>84</td><td>Floors 78–83</td><td>6</td><td>8 + 6 = <b>14</b></td></tr>
+        <tr><td>9</td><td>90</td><td>Floors 85–89</td><td>5</td><td>9 + 5 = <b>14</b></td></tr>
+        <tr><td>10</td><td>95</td><td>Floors 91–94</td><td>4</td><td>10 + 4 = <b>14</b></td></tr>
+        <tr><td>11</td><td>99</td><td>Floors 96–98</td><td>3</td><td>11 + 3 = <b>14</b></td></tr>
+        <tr><td>12</td><td>100</td><td>—</td><td>0</td><td><b>12</b> (never breaks)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row note">
+    <b>Example:</b> if the first egg breaks at floor <code>27</code>, we already know floor <code>14</code> was safe.  
+    Use the second egg to search linearly: <code>15, 16, …, 26</code>.  
+    The highest safe floor is the last one that doesn’t break (≤ 26).
+  </div>
+
+  <div class="row">
+    <a class="btn" href="../index.html">← Back to Home</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercise 7 — Carrots (Unbounded Knapsack)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Carrot Bag — Max Value (Unbounded Knapsack)</h1>
+  <p>Paste carrot types as JSON (kg/price) and set the bag capacity (kg). Example:<br>
+    <code>[{"kg":5,"price":100},{"kg":7,"price":150},{"kg":3,"price":70}]</code>
+  </p>
+
+  <div class="row">
+    <label for="types"><b>Carrot types (JSON)</b></label><br>
+    <textarea id="types" placeholder='[{"kg":5,"price":100},{"kg":7,"price":150},{"kg":3,"price":70}]'></textarea>
+  </div>
+
+  <div class="row">
+    <label for="capacity"><b>Capacity (kg)</b></label><br>
+    <input id="capacity" type="number" min="0" step="1" value="36" />
+  </div>
+
+  <div class="row">
+    <button id="solveBtn" class="btn">Solve</button>
+    <button id="clearBtn" class="btn1">Clear</button>
+  </div>
+
+  <div class="row">
+    <b>Result:</b>
+    <pre id="result">—</pre>
+  </div>
+
+  <div class="row">
+    <details>
+      <summary>Show the function (copy-friendly)</summary>
+      <pre id="fnCode"></pre>
+    </details>
+  </div>
+
+  <div class="row">
+    <a class="btn" href="../index.html">← Back to Home</a>
+    <a class="btn1" href="./carrots.js" target="_blank" rel="noopener">View JS file</a>
+  </div>
+
+  <script src="carrots.js"></script>
+  <script>
+    const $ = (s) => document.querySelector(s);
+
+    // show function source for copy
+    $('#fnCode').textContent = getMaxValue.toString();
+
+    $('#solveBtn').addEventListener('click', () => {
+      $('#result').textContent = 'Calculating...';
+
+      // parse types (JSON expected)
+      let types;
+      try {
+        const raw = $('#types').value.trim();
+        types = JSON.parse(raw);
+        if (!Array.isArray(types)) throw new Error('Types must be an array.');
+        for (const t of types) {
+          if (typeof t?.kg !== 'number' || typeof t?.price !== 'number') {
+            throw new Error('Each type must be an object with numeric "kg" and "price".');
+          }
+        }
+      } catch (e) {
+        $('#result').textContent = `❌ Invalid JSON for carrot types: ${e.message}`;
+        return;
+      }
+
+      const cap = Number($('#capacity').value);
+      if (!Number.isFinite(cap) || cap < 0) {
+        $('#result').textContent = '❌ Capacity must be a non-negative integer.';
+        return;
+      }
+
+      const { maxValue, counts } = getMaxValue(types, Math.floor(cap));
+      const usedLines = [];
+      let totalW = 0, totalV = 0;
+
+      counts.forEach((cnt, i) => {
+        if (cnt > 0) {
+          const w = cnt * types[i].kg;
+          const v = cnt * types[i].price;
+          totalW += w; totalV += v;
+          usedLines.push(
+            `Type #${i+1}: kg=${types[i].kg}, price=${types[i].price}  ->  count=${cnt}, weight=${w}, value=${v}`
+          );
+        }
+      });
+
+      $('#result').textContent =
+        `Max value: ${maxValue}\n` +
+        `Total weight used: ${totalW} / capacity ${cap}\n\n` +
+        (usedLines.length ? usedLines.join('\n') : '(No items used)');
+    });
+
+    $('#clearBtn').addEventListener('click', () => {
+      $('#types').value = '';
+      $('#capacity').value = 0;
+      $('#result').textContent = '—';
+    });
+
+    // preload example
+    $('#types').value = JSON.stringify(
+      [{kg:5,price:100},{kg:7,price:150},{kg:3,price:70}],
+      null, 0
+    );
+  </script>
+</body>
+</html>
