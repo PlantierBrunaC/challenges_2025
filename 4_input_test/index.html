@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercise 4 — Bracket Validator (Stack)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Bracket Validator (using a Stack)</h1>
+  <p>Paste any text or code below. Only the characters <code>()[]{} </code> are considered.</p>
+
+  <div class="row">
+    <label for="code"><b>Input</b></label><br />
+    <textarea id="code" placeholder='e.g. function f(){ return arr[i*(j+2)]; }'></textarea>
+  </div>
+
+  <div class="row actions">
+    <button id="testBtn" class="btn">Test</button>
+    <button id="clearBtn" class="btn secondary">Clear</button>
+  </div>
+
+  <div class="row">
+    <b>Result:</b>
+    <pre id="result">—</pre>
+  </div>
+
+   <div class="row">
+    <a href="../index.html" class="btn back">← Back to Home</a>
+  </div>
+
+  <script src="brackets.js"></script>
+  <script>
+  
+    const $ = (sel) => document.querySelector(sel);
+    $('#testBtn').addEventListener('click', () => {
+      const input = $('#code').value ?? '';
+      const { ok, message, onlyBrackets } = isValidBrackets(input);
+
+      const box = $('#result');
+      box.classList.toggle('ok', ok);
+      box.classList.toggle('error', !ok);
+      box.textContent = `${message}\n\nOnly brackets considered: ${onlyBrackets || '(none)'}`;
+    });
+
+    $('#clearBtn').addEventListener('click', () => {
+      $('#code').value = '';
+      const box = $('#result');
+      box.classList.remove('ok','error');
+      box.textContent = '—';
+    });
+  </script>
+</body>
+</html>
