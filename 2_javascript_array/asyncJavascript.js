@@ -1,26 +1,41 @@
 
+function sleep(ms, signal) {
+  return new Promise((resolve, reject) => {
+    const id = setTimeout(resolve, ms);
+    if (signal) {
+      if (signal.aborted) {
+        clearTimeout(id);
+        return reject(new DOMException('Aborted', 'AbortError'));
+      }
+      signal.addEventListener('abort', () => {
+        clearTimeout(id);
+        reject(new DOMException('Aborted', 'AbortError'));
+      }, { once: true });
+    }
+  });
+}
 
 
-async function writeItemsWithDelay(maxDelayMs = 10000) {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
-  const output = document.getElementById("output");
+async function writeItemsWithExponentialDelay(items, outputEl, signal) {
+  if (!Array.isArray(items)) {
+    throw new TypeError('items must be an array');
+  }
+
+  if (items.length === 0) {
+    outputEl.textContent = 'Nothing to display.';
+    return;
+  }
 
   let delay = 1000; 
-  let elapsed = 0;  
-  let index = 0;    
+  let elapsed = 0;
 
-  while (elapsed + delay <= maxDelayMs) {
-    const thisDelay = delay;
+  for (let i = 0; i < items.length; i++) {
+    await sleep(delay, signal);
+    elapsed += delay;
 
-    await new Promise(resolve => setTimeout(resolve, thisDelay));
-    elapsed += thisDelay;
-
-    const letter = alphabet[index % alphabet.length];
-    output.textContent += `${letter} - ${thisDelay / 1000}s\n`;
-
+    outputEl.textContent += `${String(items[i])}  —  +${(delay/1000)}s (total: ${(elapsed/1000)}s)\n`;
     delay *= 2;
-    index++;
   }
 }
 
-window.writeItemsWithDelay = writeItemsWithDelay;
+window.writeItemsWithExponentialDelay = writeItemsWithExponentialDelay;

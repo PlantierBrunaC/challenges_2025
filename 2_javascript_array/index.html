@@ -1,57 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
-
-  <meta charset="UTF-8">
-  <title>Async Delay Example</title>
-
+  <meta charset="UTF-8" />
+  <title>Print Items with Progressive Delay</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
-
 </head>
-
 <body>
 
-<h1>Exibir Itens com Atraso Progressivo</h1>
+  <h1>Print Items with Progressive Delay (1s, 2s, 4s, ... until the array ends)</h1>
 
-<div class="row">
-  <label for="maxDelay"><b>Atraso máximo (segundos)</b></label><br>
-  <input id="maxDelay" type="number" min="1" step="1" value="10" placeholder="ex.: 10"><br>
-  <small>O primeiro atraso é 1s e dobra a cada item (1s, 2s, 4s, …) até o valor máximo indicado.</small>
-  <br>
-</div>
+  <div class="row">
+    <label for="items"><b>Items</b> (separate with commas, semicolons, or line breaks):</label><br />
+    <textarea id="items" placeholder="e.g.:
+A
+B
+C
+or
+1, 2, 3"></textarea>
+  </div>
 
-<div>
-  <button id="startBtn" class="btn1">Iniciar</button>
-</div>
+  <div class="row">
+    <button id="startBtn" class="btn1">Start</button>
+    <button id="stopBtn"  class="btn1" style="background:#999" disabled>Stop</button>
+    <button id="clearBtn" class="btn1" style="background:#bbb">Clear</button>
+  </div>
 
-<div class="row">
-  <b>Resultado:</b>
-  <pre id="output">—</pre>
-</div>
+  <div class="row">
+    <b>Output:</b>
+    <pre id="output">—</pre>
+  </div>
 
-<div class="row">
-  <a href="../index.html" class="btn">Voltar para home</a>
-</div>
-
-
-
+  <div class="row">
+    <a href="../index.html" class="btn">Home</a>
+  </div>
 
   <script src="asyncJavascript.js"></script>
-<script>
-  document.getElementById("startBtn").addEventListener("click", () => {
-    document.getElementById("output").textContent = "";
+  <script>
+    const $ = (sel) => document.querySelector(sel);
+    const sepRegex = /[,\n;]+/;
 
-    const maxSecs = Number(document.getElementById("maxDelay").value);
-    const maxDelayMs = Number.isFinite(maxSecs) && maxSecs > 0 ? maxSecs * 1000 : 10000;
+    let currentController = null;
 
-    writeItemsWithDelay(maxDelayMs);
-  });
-</script>
+    function setRunningState(isRunning) {
+      $('#startBtn').disabled = isRunning;
+      $('#stopBtn').disabled  = !isRunning;
+    }
 
+    $('#startBtn').addEventListener('click', async () => {
+      const output = $('#output');
+      output.textContent = '';
 
+      if (currentController) currentController.abort();
 
+      const items = $('#items').value
+        .split(sepRegex)
+        .map(s => s.trim())
+        .filter(Boolean);
+
+      if (!items.length) {
+        output.textContent = 'No items provided.';
+        return;
+      }
+
+      currentController = new AbortController();
+      setRunningState(true);
+
+      try {
+        await writeItemsWithExponentialDelay(items, output, currentController.signal);
+        output.textContent += '\nCompleted.';
+      } catch (e) {
+        if (e?.name === 'AbortError') {
+          output.textContent += '\nStopped by user.';
+        } else {
+          output.textContent += `\nError: ${e?.message || e}`;
+        }
+      } finally {
+        setRunningState(false);
+        currentController = null;
+      }
+    });
+
+    $('#stopBtn').addEventListener('click', () => {
+      currentController?.abort();
+    });
+
+    $('#clearBtn').addEventListener('click', () => {
+      $('#items').value = '';
+      $('#output').textContent = '—';
+    });
+  </script>
 </body>
 </html>
