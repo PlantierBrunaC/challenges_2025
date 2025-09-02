@@ -22,17 +22,17 @@
 
   <div class="row">
     <b>Result:</b>
-    <pre id="result">—</pre>
+    <pre id="result"></pre>
   </div>
 
-   <div class="row">
-    <a href="../index.html" class="btn back">← Back to Home</a>
+  <div class="row">
+    <a href="../index.html" class="btn back">Home</a>
   </div>
 
   <script src="brackets.js"></script>
   <script>
-  
     const $ = (sel) => document.querySelector(sel);
+
     $('#testBtn').addEventListener('click', () => {
       const input = $('#code').value ?? '';
       const { ok, message, onlyBrackets } = isValidBrackets(input);
@@ -47,7 +47,7 @@
       $('#code').value = '';
       const box = $('#result');
       box.classList.remove('ok','error');
-      box.textContent = '—';
+      box.textContent = '';
     });
   </script>
 </body>
