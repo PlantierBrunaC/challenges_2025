@@ -1,0 +1,56 @@
+# -------------------------
+# Node / JS
+# -------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+logs/
+*.pid
+*.pid.lock
+pids
+*.seed
+*.trace
+
+# -------------------------
+# Build output / caches
+# -------------------------
+# (covers root and subprojects like 3_react_chart)
+**/dist/
+**/build/
+.cache/
+.tmp/
+.temp/
+.out/
+.eslintcache
+
+# Vite cache
+**/.vite/
+
+# Coverage
+coverage/
+
+# -------------------------
+# Env files (keep examples)
+# -------------------------
+.env
+.env.*
+!.env.example
+
+# -------------------------
+# Editor / OS cruft
+# -------------------------
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -------------------------
+# Misc
+# -------------------------
+# live-server local config (if you ever create one)
+.live-server.json

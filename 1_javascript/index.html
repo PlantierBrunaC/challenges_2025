@@ -1,50 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Checar duplicados no array</title>
+  <title>Check Duplicates in Array</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-
-
 </head>
 <body>
 
-  <h1>Checar Duplicados no Array</h1>
+  <h1>Check Duplicates in Array</h1>
 
   <div class="row">
-    <label for="items"><b>Itens</b> (separe por vírgula, ponto e vírgula ou quebra de linha):</label><br />
-    <textarea id="items" placeholder="ex.: 1, 2, 3, 2, 5, 1
-ou
-maçã
+    <label for="items"><b>Items</b> (separate with commas, semicolons, or line breaks):</label><br />
+    <textarea id="items" placeholder="e.g.: 1, 2, 3, 2, 5, 1
+or
+apple
 banana
-maçã"
->
-</textarea>
+apple"
+></textarea>
   </div>
 
   <div class="row">
-    <label><input type="checkbox" id="asNumbers"> Tratar como números</label>
+    <label><input type="checkbox" id="asNumbers"> Treat as numbers</label>
     &nbsp;•&nbsp;
-    <label><input type="checkbox" id="caseSensitive"> Diferenciar maiúsculas/minúsculas</label>
+    <label><input type="checkbox" id="caseSensitive"> Case sensitive</label>
   </div>
 
   <div class="row">
-    <button id="runBtn" class="btn1">Checar duplicados</button>
+    <button id="runBtn" class="btn1">Check duplicates</button>
   </div>
 
   <div class="row">
-    <b>Resultado:</b>
+    <b>Result:</b>
     <pre id="output">—</pre>
   </div>
 
-
   <div class="row">
-    <a href="../index.html" class="btn">Voltar para home</a>
+    <a href="../index.html" class="btn">Home</a>
   </div>
-
-  
 
   <script src="duplicates.js"></script>
   <script>
@@ -70,11 +64,11 @@ maçã"
 
       const dups = findDuplicates(items);
       if (dups.includes(null)) {
-        $('#output').textContent = "Não há duplicados com os filtros atuais";
+        $('#output').textContent = "There are no duplicates with the current filters";
       } else {
         $('#output').textContent = dups.length
-          ? `Duplicados: ${JSON.stringify(dups)}`
-          : 'Sem duplicados ✅';
+          ? `Duplicates: ${JSON.stringify(dups)}`
+          : 'No duplicates ✅';
       }
     });
   </script>

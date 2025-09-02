@@ -1,0 +1,29 @@
+{
+  "name": "challenge",
+  "version": "1.0.0",
+  "description": "Projeto estático com exercícios e um módulo React",
+  "main": "index.html",
+  "scripts": {
+    "start": "npm run serve",
+    "serve": "live-server --port=3000 --open=index.html --watch=.",
+    "react": "npm --prefix 3_react_chart run dev",
+    "dev": "concurrently -n root,react -c auto \"npm run serve\" \"npm --prefix 3_react_chart run dev\"",
+    "react:build": "npm --prefix 3_react_chart run build",
+    "react:preview": "npm --prefix 3_react_chart run preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PlantierBrunaC/challenges_2025.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PlantierBrunaC/challenges_2025/issues"
+  },
+  "homepage": "https://github.com/PlantierBrunaC/challenges_2025#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "live-server": "^1.2.2"
+  }
+}
