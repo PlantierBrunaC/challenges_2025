@@ -1,17 +1,16 @@
-// src/components/SectionOne.jsx
 import Box from "./Box";
 
 export default function SectionOne() {
   return (
-    <div style={{ display: "flex", gap: 10 }}>
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
-        <Box label="Hero" bg="#c6b3d8" h={120} />
-        <Box label="Sidebar" bg="#a4ce7a" h={120} />
+    <div className="gridMain">
+      <div className="col">
+        <Box label="Hero" bg="#cbb8e5" h={120} />
+        <Box label="Sidebar" bg="#a5cf88" h={120} />
       </div>
 
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 10 }}>
-        <Box label="Main Content" bg="#f6bd3a" h={180} />
-        <Box label="Extra Content" bg="#8a8a8a" h={80} />
+      <div className="col">
+        <Box label="Main Content" bg="#f1b735" h={180} />
+        <Box label="Extra Content" bg="#9a9a9a" h={60} />
       </div>
     </div>
   );

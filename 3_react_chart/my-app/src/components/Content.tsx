@@ -1,4 +1,3 @@
-// src/components/Content.jsx
 import SectionOne from "./SectionOne";
 import SectionTwo from "./SectionTwo";
 
