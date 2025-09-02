@@ -29,6 +29,14 @@ p  { margin: 0 0 24px; color: var(--muted); }
 
 .desc  { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
 
+.gitlink  { color: #fff; 
+  font-size: 14px; 
+  text-decoration: none; 
+  margin-top: 10px ; }
+
+.gitlink:hover { text-decoration: underline; }
+
+
 .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
 .btn {
