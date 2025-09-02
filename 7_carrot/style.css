@@ -63,3 +63,16 @@ pre {
   display: inline-block;
 }
 .btn1:hover { background: #2b0469; }
+
+#clearBtn {
+  background: #999;       
+}
+#clearBtn:hover {
+  background: #777;        
+}
+#clearBtn:disabled {
+  background: #bbb;        
+  cursor: not-allowed;
+  opacity: 1;            
+}
+

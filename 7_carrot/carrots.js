@@ -1,10 +1,7 @@
-// Unbounded knapsack (integer kg).
-// carrotTypes: [{kg: number, price: number}, ...]
-// capacity: integer kg
 function getMaxValue(carrotTypes, capacity) {
   const n = carrotTypes.length;
   const dp = Array(capacity + 1).fill(0);
-  const choice = Array(capacity + 1).fill(-1); // which item last used for weight w
+  const choice = Array(capacity + 1).fill(-1);
 
   for (let w = 1; w <= capacity; w++) {
     let best = 0, bestIdx = -1;
@@ -22,7 +19,6 @@ function getMaxValue(carrotTypes, capacity) {
     choice[w] = bestIdx;
   }
 
-  // reconstruct counts
   const counts = Array(n).fill(0);
   let w = capacity;
   while (w > 0 && choice[w] !== -1) {
@@ -34,5 +30,4 @@ function getMaxValue(carrotTypes, capacity) {
   return { maxValue: dp[capacity], counts };
 }
 
-// expose globally for index.html "Show function"
 window.getMaxValue = getMaxValue;

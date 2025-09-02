@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercise 6 — Zeno’s Paradox: Achilles and the Tortoise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Zeno’s Paradox — Achilles and the Tortoise</h1>
+  <p>Achilles repeatedly runs to where the tortoise <i>was</i>. During that time, the tortoise moves a bit forward, so Achilles must run again to its new spot. This animation shows the infinite sequence of shrinking steps.</p>
+
+  <div class="row">
+    <label><b>Track length (m)</b></label><br/>
+    <input id="trackLen" type="number" min="100" step="50" value="400" />
+  </div>
+
+  <div class="row">
+    <label><b>Achilles speed (m/s)</b></label><br/>
+    <input id="vA" type="number" min="0.1" step="0.1" value="10" />
+  </div>
+
+  <div class="row">
+    <label><b>Tortoise speed (m/s)</b></label><br/>
+    <input id="vT" type="number" min="0.01" step="0.01" value="5" />
+  </div>
+
+  <div class="row">
+    <label><b>Tortoise head start (m)</b></label><br/>
+    <input id="lead" type="number" min="1" step="1" value="50" />
+  </div>
+
+  <div class="row">
+    <button id="startBtn" class="btn1">Start</button>
+    <button id="stopBtn"  class="btn1" disabled>Stop</button>
+    <button id="resetBtn" class="btn1">Reset</button>
+  </div>
+
+  <div class="row">
+    <div class="track" id="track">
+      <div class="runner runner--achilles" id="achilles" title="Achilles">A</div>
+      <div class="runner runner--tortoise" id="tortoise" title="Tortoise">T</div>
+      <div class="finish" id="finish"></div>
+    </div>
+    <div class="legend">
+      <span class="chip chip--a">A</span> Achilles
+      &nbsp;&nbsp;
+      <span class="chip chip--t">T</span> Tortoise
+    </div>
+  </div>
+
+  <div class="row">
+    <b>Steps:</b>
+    <pre id="log"></pre>
+  </div>
+
+  <div class="row">
+    <a href="../index.html" class="btn">Home</a>
+  </div>
+
+  <script src="zeno.js"></script>
+</body>
+</html>

@@ -29,35 +29,23 @@
 
   <div class="row">
     <b>Result:</b>
-    <pre id="result">—</pre>
+    <pre id="result"></pre>
   </div>
 
   <div class="row">
-    <details>
-      <summary>Show the function (copy-friendly)</summary>
-      <pre id="fnCode"></pre>
-    </details>
-  </div>
-
-  <div class="row">
-    <a class="btn" href="../index.html">← Back to Home</a>
-    <a class="btn1" href="./carrots.js" target="_blank" rel="noopener">View JS file</a>
+    <a class="btn" href="../index.html">Home</a>
   </div>
 
   <script src="carrots.js"></script>
   <script>
     const $ = (s) => document.querySelector(s);
 
-    // show function source for copy
-    $('#fnCode').textContent = getMaxValue.toString();
+    document.getElementById('solveBtn').addEventListener('click', () => {
+      document.getElementById('result').textContent = 'Calculating...';
 
-    $('#solveBtn').addEventListener('click', () => {
-      $('#result').textContent = 'Calculating...';
-
-      // parse types (JSON expected)
       let types;
       try {
-        const raw = $('#types').value.trim();
+        const raw = document.getElementById('types').value.trim();
         types = JSON.parse(raw);
         if (!Array.isArray(types)) throw new Error('Types must be an array.');
         for (const t of types) {
@@ -66,13 +54,13 @@
           }
         }
       } catch (e) {
-        $('#result').textContent = `❌ Invalid JSON for carrot types: ${e.message}`;
+        document.getElementById('result').textContent = 'Invalid JSON for carrot types: ' + e.message;
         return;
       }
 
-      const cap = Number($('#capacity').value);
+      const cap = Number(document.getElementById('capacity').value);
       if (!Number.isFinite(cap) || cap < 0) {
-        $('#result').textContent = '❌ Capacity must be a non-negative integer.';
+        document.getElementById('result').textContent = 'Capacity must be a non-negative integer.';
         return;
       }
 
@@ -91,20 +79,19 @@
         }
       });
 
-      $('#result').textContent =
+      document.getElementById('result').textContent =
         `Max value: ${maxValue}\n` +
         `Total weight used: ${totalW} / capacity ${cap}\n\n` +
         (usedLines.length ? usedLines.join('\n') : '(No items used)');
     });
 
-    $('#clearBtn').addEventListener('click', () => {
-      $('#types').value = '';
-      $('#capacity').value = 0;
-      $('#result').textContent = '—';
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('types').value = '';
+      document.getElementById('capacity').value = 0;
+      document.getElementById('result').textContent = '';
     });
 
-    // preload example
-    $('#types').value = JSON.stringify(
+    document.getElementById('types').value = JSON.stringify(
       [{kg:5,price:100},{kg:7,price:150},{kg:3,price:70}],
       null, 0
     );
